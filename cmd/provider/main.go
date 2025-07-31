@@ -23,6 +23,7 @@ import (
 	"time"
 
 	"gopkg.in/alecthomas/kingpin.v2"
+	extv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/tools/leaderelection/resourcelock"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -105,6 +106,7 @@ func main() {
 	}
 
 	kingpin.FatalIfError(apis.AddToScheme(mgr.GetScheme()), "Cannot add Nop APIs to scheme")
+	kingpin.FatalIfError(extv1.AddToScheme(mgr.GetScheme()), "Cannot add Core API Extensions to scheme")
 	kingpin.FatalIfError(nop.Setup(mgr, o), "Cannot setup Nop controllers")
 	kingpin.FatalIfError(customresourcesgate.Setup(mgr, o), "Cannot setup CustomResourceGate controller")
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
