@@ -22,7 +22,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"sigs.k8s.io/controller-runtime/pkg/scheme"
 
-	"github.com/crossplane/crossplane-runtime/pkg/webhook"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/webhook"
 )
 
 // Package type metadata.

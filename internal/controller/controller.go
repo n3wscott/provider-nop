@@ -20,7 +20,7 @@ import (
 	"github.com/crossplane-contrib/provider-nop/internal/controller/nopresource"
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	"github.com/crossplane/crossplane-runtime/pkg/controller"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/controller"
 )
 
 // Setup creates all nop controllers with the supplied logger and adds them to
