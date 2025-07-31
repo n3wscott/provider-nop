@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Crossplane Authors.
+Copyright 2025 The Crossplane Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,9 +19,54 @@ package v1alpha1
 
 import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 
-// GetCondition of this NopResource.
-func (mg *NopResource) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+// GetCondition of this ClusterNopResource.
+func (mg *ClusterNopResource) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this ClusterNopResource.
+func (mg *ClusterNopResource) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this ClusterNopResource.
+func (mg *ClusterNopResource) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this ClusterNopResource.
+func (mg *ClusterNopResource) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this ClusterNopResource.
+func (mg *ClusterNopResource) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this ClusterNopResource.
+func (mg *ClusterNopResource) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this ClusterNopResource.
+func (mg *ClusterNopResource) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this ClusterNopResource.
+func (mg *ClusterNopResource) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this ClusterNopResource.
+func (mg *ClusterNopResource) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this ClusterNopResource.
+func (mg *ClusterNopResource) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetDeletionPolicy of this NopResource.
@@ -42,11 +87,6 @@ func (mg *NopResource) GetProviderConfigReference() *xpv1.Reference {
 // GetWriteConnectionSecretToReference of this NopResource.
 func (mg *NopResource) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
-}
-
-// SetConditions of this NopResource.
-func (mg *NopResource) SetConditions(c ...xpv1.Condition) {
-	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this NopResource.

@@ -24,9 +24,9 @@ import (
 	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 )
 
-// ResourceConditionAfter specifies a condition of a NopResource that should be
+// ConditionAfter specifies a condition of a NopResource that should be
 // set after a certain duration.
-type ResourceConditionAfter struct {
+type ConditionAfter struct {
 	// Time is the duration after which the condition should be set.
 	Time metav1.Duration `json:"time"`
 
@@ -41,9 +41,9 @@ type ResourceConditionAfter struct {
 	ConditionReason *xpv1.ConditionReason `json:"conditionReason,omitempty"`
 }
 
-// ResourceConnectionDetail specifies a connection detail a NopResource should
+// ConnectionDetail specifies a connection detail a NopResource should
 // emit.
-type ResourceConnectionDetail struct {
+type ConnectionDetail struct {
 	// Name of the connection detail.
 	Name string `json:"name"`
 
@@ -51,18 +51,18 @@ type ResourceConnectionDetail struct {
 	Value string `json:"value"`
 }
 
-// NopResourceParameters are the configurable fields of a NopResource.
-type NopResourceParameters struct {
+// NopParameters are the configurable fields of a NopResource.
+type NopParameters struct {
 	// ConditionAfter can be used to set status conditions after a specified
-	// time. By default a NopResource will only have a status condition of Type:
-	// Synced. It will never have a status condition of Type: Ready unless one
-	// is configured here.
+	// time. By default, a NopResource will only have a status condition of
+	// Type: Synced. It will never have a status condition of Type: Ready
+	// unless one is configured here.
 	// +optional
-	ConditionAfter []ResourceConditionAfter `json:"conditionAfter,omitempty"`
+	ConditionAfter []ConditionAfter `json:"conditionAfter,omitempty"`
 
 	// ConnectionDetails that this NopResource should emit on each reconcile.
 	// +optional
-	ConnectionDetails []ResourceConnectionDetail `json:"connectionDetails,omitempty"`
+	ConnectionDetails []ConnectionDetail `json:"connectionDetails,omitempty"`
 
 	// Fields is an arbitrary object you can patch to and from. It has no
 	// schema, is not validated, and is not used by the NopResource controller.
@@ -70,47 +70,22 @@ type NopResourceParameters struct {
 	Fields runtime.RawExtension `json:"fields,omitempty"`
 }
 
-// NopResourceObservation are the observable fields of a NopResource.
-type NopResourceObservation struct {
+// NopObservation are the observable fields of a NopResource.
+type NopObservation struct {
 	// Fields is an arbitrary object you can patch to and from. It has no
 	// schema, is not validated, and is not used by the NopResource controller.
 	// +optional
 	Fields runtime.RawExtension `json:"fields,omitempty"`
 }
 
-// A NopResourceSpec defines the desired state of a NopResource.
-type NopResourceSpec struct {
+// A NopSpec defines the desired state of a NopResource.
+type NopSpec struct {
 	xpv1.ResourceSpec `json:",inline"`
-	ForProvider       NopResourceParameters `json:"forProvider"`
+	ForProvider       NopParameters `json:"forProvider"`
 }
 
-// A NopResourceStatus represents the observed state of a NopResource.
-type NopResourceStatus struct {
+// A NopStatus represents the observed state of a NopResource.
+type NopStatus struct {
 	xpv1.ResourceStatus `json:",inline"`
-	AtProvider          NopResourceObservation `json:"atProvider,omitempty"`
-}
-
-// +kubebuilder:object:root=true
-
-// A NopResource is an example API type.
-// +kubebuilder:subresource:status
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
-// +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
-// +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,nop}
-type NopResource struct {
-	metav1.TypeMeta   `json:",inline"`
-	metav1.ObjectMeta `json:"metadata,omitempty"`
-
-	Spec   NopResourceSpec   `json:"spec"`
-	Status NopResourceStatus `json:"status,omitempty"`
-}
-
-// +kubebuilder:object:root=true
-
-// NopResourceList contains a list of NopResource.
-type NopResourceList struct {
-	metav1.TypeMeta `json:",inline"`
-	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []NopResource `json:"items"`
+	AtProvider          NopObservation `json:"atProvider,omitempty"`
 }
