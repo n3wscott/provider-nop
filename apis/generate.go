@@ -18,9 +18,9 @@ limitations under the License.
 //go:generate rm -rf ../package/crds
 
 // Generate deepcopy methodsets and CRD manifests
-//go:generate go tool --modfile=tools.mod controller-gen object:headerFile=../hack/boilerplate.go.txt paths=./... crd:crdVersions=v1 output:artifacts:config=../package/crds
+//go:generate go tool controller-gen object:headerFile=../hack/boilerplate.go.txt paths=./... crd:crdVersions=v1 output:artifacts:config=../package/crds
 
 // Generate crossplane-runtime methodsets
-//go:generate go tool --modfile=tools.mod angryjet generate-methodsets --header-file=../hack/boilerplate.go.txt ../apis/...
+//go:generate go tool angryjet generate-methodsets --header-file=../hack/boilerplate.go.txt ../apis/...
 
 package apis

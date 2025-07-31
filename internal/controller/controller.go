@@ -21,8 +21,8 @@ import (
 
 	"github.com/crossplane/crossplane-runtime/v2/pkg/controller"
 
-	"github.com/crossplane-contrib/provider-nop/v2/internal/controller/clusternopresource"
-	"github.com/crossplane-contrib/provider-nop/v2/internal/controller/nopresource"
+	"github.com/crossplane-contrib/provider-nop/internal/controller/clusternopresource"
+	"github.com/crossplane-contrib/provider-nop/internal/controller/nopresource"
 )
 
 // Setup creates all nop controllers with the supplied logger and adds them to

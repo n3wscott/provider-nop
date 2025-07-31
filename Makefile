@@ -92,7 +92,6 @@ crds.clean:
 	@$(OK) cleaned generated CRDs
 
 generate: crds.clean
-	@go generate ./... # until https://github.com/crossplane/build/issues/36 is resolved, also ask go to generate.
 
 # integration tests
 e2e.run: test-integration

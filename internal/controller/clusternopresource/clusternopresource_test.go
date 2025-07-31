@@ -29,7 +29,7 @@ import (
 	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/test"
 
-	"github.com/crossplane-contrib/provider-nop/v2/apis/v1alpha1"
+	"github.com/crossplane-contrib/provider-nop/apis/v1alpha1"
 )
 
 // Unlike many Kubernetes projects Crossplane does not use third party testing

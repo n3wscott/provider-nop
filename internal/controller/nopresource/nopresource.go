@@ -33,8 +33,8 @@ import (
 	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/statemetrics"
 
-	"github.com/crossplane-contrib/provider-nop/v2/apis/v1alpha1"
-	"github.com/crossplane-contrib/provider-nop/v2/internal/nopprovider"
+	"github.com/crossplane-contrib/provider-nop/apis/v1alpha1"
+	"github.com/crossplane-contrib/provider-nop/internal/nopprovider"
 )
 
 // SetupGated registers Setup with the Gate, waiting for the NopResource GKV.

@@ -18,7 +18,7 @@ limitations under the License.
 package apis
 
 import (
-	v1alpha1 "github.com/crossplane-contrib/provider-nop/v2/apis/v1alpha1"
+	v1alpha1 "github.com/crossplane-contrib/provider-nop/apis/v1alpha1"
 	"k8s.io/apimachinery/pkg/runtime"
 )
 

@@ -38,8 +38,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	"sigs.k8s.io/controller-runtime/pkg/metrics"
 
-	"github.com/crossplane-contrib/provider-nop/v2/apis"
-	nop "github.com/crossplane-contrib/provider-nop/v2/internal/controller"
+	"github.com/crossplane-contrib/provider-nop/apis"
+	nop "github.com/crossplane-contrib/provider-nop/internal/controller"
 )
 
 const (
