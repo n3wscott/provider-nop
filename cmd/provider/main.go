@@ -18,6 +18,9 @@ limitations under the License.
 package main
 
 import (
+	"github.com/crossplane/crossplane-runtime/v2/pkg/gate"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/customresourcesgate"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	"os"
 	"path/filepath"
 	"time"
@@ -125,9 +128,11 @@ func main() {
 		GlobalRateLimiter:       ratelimiter.NewGlobal(*maxReconcileRate),
 		Features:                &feature.Flags{},
 		MetricOptions:           &mo,
+		Gate:                    new(gate.Gate[schema.GroupVersionKind]),
 	}
 
 	kingpin.FatalIfError(apis.AddToScheme(mgr.GetScheme()), "Cannot add Nop APIs to scheme")
 	kingpin.FatalIfError(nop.Setup(mgr, o), "Cannot setup Nop controllers")
+	kingpin.FatalIfError(customresourcesgate.Setup(mgr, o), "Cannot setup CustomResourceGate controller")
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
 }
