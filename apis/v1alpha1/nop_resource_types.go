@@ -17,9 +17,9 @@ limitations under the License.
 package v1alpha1
 
 import (
-	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
+	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/conditions"
 )
 
@@ -39,6 +39,9 @@ type NopResource struct {
 	Status NopStatus `json:"status,omitempty"`
 }
 
+// SetConditions sets the supplied conditions, replacing any existing conditions
+// of the same type. This is a no-op if all supplied conditions are identical,
+// ignoring the last transition time, to those already set.
 func (in *NopResource) SetConditions(c ...xpv1.Condition) {
 	in.Status.SetConditions(c...)
 }
@@ -57,5 +60,6 @@ var _ conditions.ObjectWithConditions = (*NopResource)(nil)
 type NopResourceList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []NopResource `json:"items"`
+
+	Items []NopResource `json:"items"`
 }

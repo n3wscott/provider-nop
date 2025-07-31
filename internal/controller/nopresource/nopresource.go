@@ -21,11 +21,11 @@ import (
 	"context"
 	"time"
 
-	"github.com/pkg/errors"
 	ctrl "sigs.k8s.io/controller-runtime"
 
 	"github.com/crossplane/crossplane-runtime/v2/pkg/conditions"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/controller"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/errors"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/event"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/meta"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/ratelimiter"
@@ -93,7 +93,7 @@ func Observe(_ context.Context, mg resource.Managed) (managed.ExternalObservatio
 		return managed.ExternalObservation{}, errors.Errorf("managed resource was not a %T", &v1alpha1.NopResource{})
 	}
 	status := conditions.ObservedGenerationPropagationManager{}.For(nop)
-	age := time.Since(nop.ObjectMeta.CreationTimestamp.Time)
+	age := time.Since(nop.CreationTimestamp.Time)
 
 	return nopprovider.Observe(nop.Spec.ForProvider, age, status)
 }

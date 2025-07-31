@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// Package nopprovider is logic for the controllers for a managed resource that does nothing.
 package nopprovider
 
 import (
@@ -22,10 +23,11 @@ import (
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"github.com/crossplane-contrib/provider-nop/apis/v1alpha1"
 	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/conditions"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/managed"
+
+	"github.com/crossplane-contrib/provider-nop/apis/v1alpha1"
 )
 
 // Observe doesn't actually observe an external resource. Instead, it sets the

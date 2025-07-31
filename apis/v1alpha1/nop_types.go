@@ -81,11 +81,13 @@ type NopObservation struct {
 // A NopSpec defines the desired state of a NopResource.
 type NopSpec struct {
 	xpv1.ResourceSpec `json:",inline"`
-	ForProvider       NopParameters `json:"forProvider"`
+
+	ForProvider NopParameters `json:"forProvider"`
 }
 
 // A NopStatus represents the observed state of a NopResource.
 type NopStatus struct {
 	xpv1.ResourceStatus `json:",inline"`
-	AtProvider          NopObservation `json:"atProvider,omitempty"`
+
+	AtProvider NopObservation `json:"atProvider,omitempty"`
 }

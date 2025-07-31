@@ -22,14 +22,6 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/crossplane/crossplane-runtime/v2/pkg/controller"
-	"github.com/crossplane/crossplane-runtime/v2/pkg/feature"
-	"github.com/crossplane/crossplane-runtime/v2/pkg/gate"
-	"github.com/crossplane/crossplane-runtime/v2/pkg/logging"
-	"github.com/crossplane/crossplane-runtime/v2/pkg/ratelimiter"
-	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/customresourcesgate"
-	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/managed"
-	"github.com/crossplane/crossplane-runtime/v2/pkg/statemetrics"
 	"gopkg.in/alecthomas/kingpin.v2"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/tools/leaderelection/resourcelock"
@@ -38,14 +30,17 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	"sigs.k8s.io/controller-runtime/pkg/metrics"
 
+	"github.com/crossplane/crossplane-runtime/v2/pkg/controller"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/feature"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/gate"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/logging"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/ratelimiter"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/customresourcesgate"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/managed"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/statemetrics"
+
 	"github.com/crossplane-contrib/provider-nop/apis"
 	nop "github.com/crossplane-contrib/provider-nop/internal/controller"
-)
-
-const (
-	webhookTLSCertDirEnvVar = "WEBHOOK_TLS_CERT_DIR"
-	tlsServerCertDirEnvVar  = "TLS_SERVER_CERTS_DIR"
-	tlsServerCertDir        = "/tls/server"
 )
 
 func main() {
@@ -61,30 +56,13 @@ func main() {
 	kingpin.MustParse(app.Parse(os.Args[1:]))
 
 	zl := zap.New(zap.UseDevMode(*debug))
+	ctrl.SetLogger(zl)
 	log := logging.NewLogrLogger(zl.WithName("provider-nop"))
-	if *debug {
-		// The controller-runtime runs with a no-op logger by default. It is
-		// *very* verbose even at info level, so we only provide it a real
-		// logger when we're running in debug mode.
-		ctrl.SetLogger(zl)
-	}
 
 	log.Debug("Starting", "sync-period", syncInterval.String())
 
 	cfg, err := ctrl.GetConfig()
 	kingpin.FatalIfError(err, "Cannot get API server rest config")
-
-	// Get the TLS certs directory from the environment variable if set
-	// In older XP versions we used WEBHOOK_TLS_CERT_DIR, in newer versions
-	// we use TLS_SERVER_CERTS_DIR. If neither are set, use the default.
-	var certDir string
-	certDir = os.Getenv(webhookTLSCertDirEnvVar)
-	if certDir == "" {
-		certDir = os.Getenv(tlsServerCertDirEnvVar)
-		if certDir == "" {
-			certDir = tlsServerCertDir
-		}
-	}
 
 	mgr, err := ctrl.NewManager(cfg, ctrl.Options{
 		Cache: cache.Options{
