@@ -75,7 +75,12 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 type connector struct{}
 
 func (c *connector) Connect(_ context.Context, _ resource.Managed) (managed.ExternalClient, error) {
-	return managed.ExternalClientFns{ObserveFn: Observe}, nil
+	return managed.ExternalClientFns{
+		ObserveFn: Observe,
+		DisconnectFn: func(_ context.Context) error {
+			return nil
+		},
+	}, nil
 }
 
 // Observe doesn't actually observe an external resource. Instead, it sets the
