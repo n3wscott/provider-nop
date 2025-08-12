@@ -40,8 +40,7 @@ GO111MODULE = on
 # Setup Kubernetes tools
 
 KIND_VERSION = v0.22.0
-UP_VERSION = v0.39.0
-UP_CHANNEL = main
+CROSSPLANE_CLI_VERSION = v2.0.0
 -include build/makelib/k8s_tools.mk
 
 # ====================================================================================
@@ -108,8 +107,9 @@ submodules:
 	@git submodule update --init --recursive
 
 # We must ensure up is installed in tool cache prior to build as including the
-# k8s_tools machinery prior to the xpkg machinery sets UP to point to tool cache.
-build.init: $(UP)
+# k8s_tools machinery prior to the xpkg machinery sets crossplane CLI to point
+# to tool cache.
+build.init: $(CROSSPLANE_CLI)
 
 # NOTE(hasheddan): the build submodule currently overrides XDG_CACHE_HOME in
 # order to force the Helm 3 to use the .work/helm directory. This causes Go on
