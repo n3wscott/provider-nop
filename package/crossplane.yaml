@@ -16,7 +16,5 @@ metadata:
     meta.crossplane.io/readme: |
       The nop Crossplane provider enables testing managed resources.
 spec:
-#  crossplane:
-#    version: "v2.0.0+"
   capabilities:
     - safe-start
