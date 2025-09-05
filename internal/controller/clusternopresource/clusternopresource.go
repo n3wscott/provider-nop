@@ -60,6 +60,13 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		managed.WithMetricRecorder(o.MetricOptions.MRMetrics),
 	)
 
+	if err := ctrl.NewWebhookManagedBy(mgr).
+		For(&v1alpha1.ClusterNopResource{}).
+		WithValidator(v1alpha1.ClusterNopResourceValidator).
+		Complete(); err != nil {
+		return errors.Wrap(err, "cannot set up webhooks")
+	}
+
 	if err := mgr.Add(statemetrics.NewMRStateRecorder(
 		mgr.GetClient(), o.Logger, o.MetricOptions.MRStateMetrics, &v1alpha1.ClusterNopResourceList{}, o.MetricOptions.PollStateMetricInterval)); err != nil {
 		return err

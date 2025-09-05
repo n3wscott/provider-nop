@@ -48,5 +48,5 @@ spec:
   # Simulating connection details (see connectionDetails above) works
   # only when the NopResource writes a connection secret.
   writeConnectionSecretToRef:
-    namespace: crossplane-system
+    namespace: default
     name: nop-example-resource
